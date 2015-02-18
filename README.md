@@ -12,13 +12,13 @@ The JS files ust be placed before the `</head>` tag:
 </head>
 ```
 
+in your php controller:
+
 ```php
-App::import('Vendor', 'Recaptcha');
 
 App::import('Vendor', 'Recaptcha');
 
-$recaptcha = new Recaptcha(your_secret_key);
-
+$recaptcha = new Recaptcha('your_secret_key');
 
 if (isset($this->data)) {
   $resp = $recaptcha->verifyResponse($_POST['g-recaptcha-response']);
