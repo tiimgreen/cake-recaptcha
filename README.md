@@ -16,7 +16,7 @@ Place the HTML within the form:
 
 ```html
   ...
-  <div class="g-recaptcha" data-sitekey="your_secret_key"></div>
+  <div class="g-recaptcha" data-sitekey="your_public_site_key"></div>
 <?php echo $form->end('Send')?>
 ```
 
