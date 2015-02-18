@@ -15,7 +15,6 @@ The JS files ust be placed before the `</head>` tag:
 in your php controller:
 
 ```php
-
 App::import('Vendor', 'Recaptcha');
 
 $recaptcha = new Recaptcha('your_secret_key');
