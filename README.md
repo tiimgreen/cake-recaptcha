@@ -4,7 +4,9 @@ For use with CakePHP 1.3
 
 ### Usage
 
-The JS files ust be placed before the `</head>` tag:
+Place the recaptcha.php file in `app/vendors`.
+
+The JS files must be placed before the `</head>` tag:
 
 ```html
   ...
@@ -14,13 +16,13 @@ The JS files ust be placed before the `</head>` tag:
 
 Place the HTML within the form:
 
-```html
+```php
   ...
   <div class="g-recaptcha" data-sitekey="your_public_site_key"></div>
 <?php echo $form->end('Send')?>
 ```
 
-in your php controller:
+In your php controller:
 
 ```php
 App::import('Vendor', 'Recaptcha');
