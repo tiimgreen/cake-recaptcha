@@ -49,7 +49,6 @@ class Recaptcha {
     curl_setopt($ch, CURLOPT_HEADER, false); // Don't return headers
 
     $data = curl_exec($ch);
-    $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
     curl_close($ch);
 
