@@ -1,8 +1,32 @@
 <?php
 
+/**
+ * CakeRecaptcha
+ * 
+ * https://github.com/tiimgreen/cake-recaptcha
+ *
+ */
+
 class RecaptchaResponse {
+
   public $success;
   public $errorCodes;
+
+  /**
+   * Contructor
+   *
+   * @param boolean $success - response from google - pass/fail
+   * @param array $errorCodes - response from google - error codes
+   */
+  function RecaptchaResponse($success = null, $errorCodes = null) {
+    if (isset($success)) {
+      $this->success = $success;
+    }
+
+    if (isset($errorCodes)) {
+      $this->errorCodes = $errorCodes;
+    }
+  }
 }
 
 class Recaptcha {
@@ -56,7 +80,7 @@ class Recaptcha {
   }
 
   /**
-   * Submits a Get request to Google with parameters.
+   * Verifies the users input and returns result/error codes.
    *
    * @param string $response - the user response token ($_POST['g-recaptcha-response']).
    * @param string $ipAddress - the user's IP address.
@@ -65,12 +89,7 @@ class Recaptcha {
    */
   public function verifyResponse($response, $ipAddress = null) {
     if ($response == '' || ! isset($response)) {
-      $recaptchaResponse = new RecaptchaResponse();
-      $recaptchaResponse->success = 0;
-      $recaptchaResponse->errorCodes = [
-        'missing-response-token'
-      ];
-      return $recaptchaResponse;
+      return new RecaptchaResponse(0, ['missing-response-token']);
     }
 
     $params = [
@@ -82,12 +101,10 @@ class Recaptcha {
       $params['remoteip'] = $ipAddress;
     }
 
-    $getReponse = $this->_submitGET($params);
+    $result = json_decode($this->_submitGET($params), true);
 
-    $result = json_decode($getReponse, true);
-
-    $recaptchaResponse = new RecaptchaResponse();
-    $recaptchaResponse->success = $result['success'] == true ? 1 : 0;
+    // Needs to be verbose because PHP.
+    $recaptchaResponse = new RecaptchaResponse($result['success'] == true ? 1 : 0);
 
     if ($result['success'] == false) {
       $recaptchaResponse->errorCodes = $result['error-codes'];
